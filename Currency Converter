@@ -1,0 +1,78 @@
+import java.util.Scanner;
+
+public class CurrencyConverter {
+    // Exchange rates
+    static double usdToEurRate = 0.85;
+    static double eurToUsdRate = 1.18;
+    static double usdToGbpRate = 0.75;
+    static double gbpToUsdRate = 1.33;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to the Currency Converter!");
+
+        while (true) {
+            System.out.println("\nSelect the currency you want to convert from:");
+            System.out.println("1. USD");
+            System.out.println("2. EUR");
+            System.out.println("3. GBP");
+            System.out.println("4. Exit");
+
+            int fromCurrency = scanner.nextInt();
+
+            if (fromCurrency == 4) {
+                System.out.println("Exiting the converter. Goodbye!");
+                break;
+            }
+
+            System.out.println("Select the currency you want to convert to:");
+            System.out.println("1. USD");
+            System.out.println("2. EUR");
+            System.out.println("3. GBP");
+
+            int toCurrency = scanner.nextInt();
+
+            if (fromCurrency == toCurrency) {
+                System.out.println("From and to currency cannot be the same.");
+                continue;
+            }
+
+            System.out.println("Enter the amount to convert:");
+            double amount = scanner.nextDouble();
+
+            double convertedAmount = convertCurrency(fromCurrency, toCurrency, amount);
+            if (convertedAmount != -1) {
+                System.out.println("Converted amount: " + convertedAmount);
+            } else {
+                System.out.println("Invalid currency selection.");
+            }
+        }
+
+        scanner.close();
+    }
+
+    // Method to convert currency
+    public static double convertCurrency(int fromCurrency, int toCurrency, double amount) {
+        switch (fromCurrency) {
+            case 1: // USD
+                if (toCurrency == 2) {
+                    return amount * usdToEurRate;
+                } else if (toCurrency == 3) {
+                    return amount * usdToGbpRate;
+                }
+                break;
+            case 2: // EUR
+                if (toCurrency == 1) {
+                    return amount * eurToUsdRate;
+                }
+                break;
+            case 3: // GBP
+                if (toCurrency == 1) {
+                    return amount * gbpToUsdRate;
+                }
+                break;
+            default:
+                return -1;
+        }
+        return -1;
+    }
